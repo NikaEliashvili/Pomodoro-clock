@@ -91,7 +91,6 @@ function App() {
 
   useEffect(() => {
     if (timeLeft === 3) {
-      console.log("Play here 1");
       audioRef.current.currentTime = 0; // Reset audio to the beginning
       audioRef.current.load(); // Play the audio
     }
