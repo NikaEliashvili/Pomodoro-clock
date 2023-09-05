@@ -1,0 +1,149 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.App {
+  margin-bottom: 4rem;
+}
+
+.labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.35rem;
+}
+
+.break-label p,
+.session-label p {
+  font-size: 1.5rem;
+  margin-top: 0;
+  width: 100%;
+
+}
+
+.session-length,
+.break-length {
+  background-color: rgb(30, 31, 31);
+  padding: 0.6rem 1rem;
+  margin: 0;
+  border-radius: 0.4rem;
+  border: 2px solid rgb(27, 26, 26);
+  color: white;
+}
+
+.session-length:hover,
+.break-length:hover {
+  border-color: #646cff;
+  background-color: rgb(26, 27, 27);
+}
+
+.break-label div,
+.session-label div {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  gap: 0.5rem;
+}
+
+.break-label,
+.session-label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0 1rem;
+}
+
+.break-label div button,
+.session-label div button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  /* color: inherit; */
+}
+
+.timer p {
+  margin: 0;
+  color: inherit;
+}
+
+.timer {
+  padding-top: 0.5rem;
+  font-size: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem 1rem;
+}
+
+.buttons-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.buttons-div button {
+  color: inherit;
+  /* border: 3px #000000 outset; */
+  border-bottom: 3px #000000 solid;
+  border-right: 3px #000000 solid;
+  border-left: 3px #4f4c4c solid;
+  border-top: 3px #4f4c4c solid;
+  transition: border 0.7s, background-color 0.7s, color 0s;
+}
+
+.buttons-div button:hover,
+.buttons-div button:active {
+  border-top-color: black;
+  border-left-color: black;
+  border-right-color: #4f4c4c;
+  border-bottom-color: #4f4c4c;
+  transform: scale(0.99);
+  background-color: rgb(20, 19, 19);
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2);
+  color: #2690a8;
+  /* font-size: 1.2rem; */
+}
+
+
+#timer-label {
+  /* color: #ffffff; */
+  background-color: #221f20;
+  padding: 0.3rem 1rem;
+  border: 1px inset #151515;
+  box-shadow: inset 1px 1px 2px #151515, inset -1px -1px 2px #151515;
+  border-radius: 0.4rem;
+}
+
+#time-left {
+  background-color: #322f2f;
+  padding: 0.1rem 1rem;
+  color: #5ea9fe;
+  font-size: 2rem;
+  font-weight: 700;
+  border-radius: 0.9rem;
+  border: 4px #000000 ridge;
+}
+
+#time-left .heart-beat {
+  color: red;
+  animation: heart-beat 0.5s ease infinite alternate;
+}
+
+@keyframes heart-beat {
+  0% {
+    transform: scale(0.93);
+  }
+
+  100% {
+    transform: scale(1.03);
+  }
+}
