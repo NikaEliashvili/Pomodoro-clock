@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import Audio from "./audioComp";
 import beepAudio from "/beep.mp3";
+import useSound from "use-sound";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import "./App.css";
-
 function App() {
   const [breakLength, setBreakLength] = useState(5);
   const [sessionLength, setSessionLength] = useState(25);
@@ -12,10 +11,12 @@ function App() {
   const [isRunning, setIsRunning] = useState(false);
   const [intervalID, setIntervalID] = useState(null);
   const [isDangerZone, setIsDangerZone] = useState(false);
-
+  const [isInteracted, setIsInteracted] = useState(false);
   const audioRef = useRef(null);
+  const [playSound, { stop }] = useSound(beepAudio);
 
   // Format time in "mm:ss" format
+
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
@@ -26,9 +27,15 @@ function App() {
 
   // Handle clicking on the start/stop button
   const handleStartStopClick = () => {
+    if (!isInteracted) {
+      setIsInteracted(true);
+    }
     if (isRunning) {
       clearInterval(intervalID);
       setIsRunning(false);
+      if (stop) {
+        stop();
+      }
     } else {
       const newIntervalID = setInterval(() => {
         setTimeLeft((prevTimeLeft) => {
@@ -51,14 +58,17 @@ function App() {
 
   // Handle clicking on the reset button
   const handleResetClick = () => {
+    if (!isInteracted) {
+      setIsInteracted(true);
+    }
     if (isRunning) {
       clearInterval(intervalID);
       setIsRunning(false);
     }
 
-    // Stop and rewind the audio
-    audioRef.current.pause();
-    audioRef.current.currentTime = 0;
+    if (stop) {
+      stop();
+    }
 
     setBreakLength(5);
     setSessionLength(25);
@@ -68,6 +78,9 @@ function App() {
 
   // Handle clicking on the increment and decrement buttons
   const handleIncrement = (type) => {
+    if (!isInteracted) {
+      setIsInteracted(true);
+    }
     if (!isRunning) {
       if (type === "break" && breakLength < 60) {
         setBreakLength(breakLength + 1);
@@ -79,6 +92,9 @@ function App() {
   };
 
   const handleDecrement = (type) => {
+    if (!isInteracted) {
+      setIsInteracted(true);
+    }
     if (!isRunning) {
       if (type === "break" && breakLength > 1) {
         setBreakLength(breakLength - 1);
@@ -90,9 +106,13 @@ function App() {
   };
 
   useEffect(() => {
+    if (timeLeft === 15) {
+      setIsDangerZone(true);
+    }
     if (timeLeft === 3) {
-      audioRef.current.currentTime = 0; // Reset audio to the beginning
-      audioRef.current.load(); // Play the audio
+      if (playSound) {
+        playSound();
+      }
     }
     if (timeLeft === 0) {
       if (timerType === "Session") {
@@ -168,13 +188,16 @@ function App() {
             <span>Reset</span>
           </button>
         </div>
-        <audio
-          id="beep"
-          ref={audioRef}
-          src={beepAudio}
-          preload="auto"
-          autoPlay
-        ></audio>
+        {isInteracted && (
+          <audio
+            id="beep"
+            controls
+            ref={audioRef}
+            src={beepAudio}
+            type="audio/mpeg"
+            preload="auto"
+          ></audio>
+        )}
       </div>
     </div>
   );
